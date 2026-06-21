@@ -1,0 +1,10 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>User: {{ user.last_name }}, {{user.first_name}}</h1>
+
+
+  <p>
+    {{user.bio}}
+  </p>
+{% endblock %}
