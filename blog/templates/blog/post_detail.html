@@ -1,26 +1,31 @@
 {% extends "base_generic.html" %}
 
+
+{% block sidebar %}
+  {{ block.super }}
+  {% if user.is_authenticated %}
+  <hr>
+  <ul class="sidebar-nav">
+    <li><a href="{% url 'post-update' post.id %}">Update post</a></li>
+    <li><a href="{% url 'post-delete' post.id %}">Delete post</a></li>
+  </ul>
+  {% endif %}
+{% endblock %}
+
 {% block content %}
   <h1>Title: {{ post.title }}</h1>
 
   <p><strong>Published:</strong> {{ post.published_date }}</p>
-  <p><strong>Author:</strong> <a href="{{ post.author.get_absolute_url }}">{{ post.author }}</a></p>  
+  <p><strong>Author:</strong> <a href="{{ post.author.get_absolute_url }} ">{{ post.author }}</a></p>  
   <p><strong>Description:</strong> {{ post.content }}</p>
 
   <div style="margin-left:20px;margin-top:20px">
     <h4>Comments</h4>
 
-    {% for copy in post.comment_set.all %}
+    {% for comment in post.comment_set.all %}
       <hr />
-      <p
-        class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">
-        {{ copy.get_status_display }}
-      </p>
-      {% if copy.st.us != 'a' %}
-        <p><strong>Due to be returned:</strong> {{ copy.due_back }}</p>
-      {% endif %}.......................................................................................................................
-      <p><strong>Imprint:</strong> {{ copy.imprint }}</p>
-      <p class="text-muted"><strong>Id:</strong> {{ copy.id }}</p>
+      {{comment.author}}
+      {{comment.content}}
     {% endfor %}..............
   </div>
 {% endblock %}

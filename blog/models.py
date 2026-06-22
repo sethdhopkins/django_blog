@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
-import uuid # Required for unique book instances
+import uuid
 
 
 # Create your models here.
@@ -29,6 +29,7 @@ class Post(models.Model):
 
     class Meta:
         ordering = ['-published_date']
+        permissions = (("blog.create_post", "Post created"), ("blog.change_post", "Post updated"), ("blog.delete_post", "Post deleted"),)
 
     def get_absolute_url(self):
         return reverse('post-detail', args=[str(self.id)])

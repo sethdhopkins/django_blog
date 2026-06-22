@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<h1>Delete Post: {{ post.title }}</h1>
+
+{% if post.comments_set.all %}
+
+<p>All comments below will also be deleted:</p>
+<ul>
+  {% for comment in post.comments_set.all %}
+    <li><a href="{% url 'post-detail' post.id %}">{{comment}}</a> ({{post.comments_set.all.count}})</li>
+  {% endfor %}
+</ul>
+
+{% else %}
+<p>Are you sure you want to delete this post?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" action="" value="Yes, delete.">
+</form>
+{% endif %}
+
+{% endblock %}
